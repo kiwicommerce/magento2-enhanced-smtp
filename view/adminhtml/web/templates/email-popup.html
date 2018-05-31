@@ -1,0 +1,52 @@
+<!--
+/**
+ * KiwiCommerce
+ *
+ * Do not edit or add to this file if you wish to upgrade to newer versions in the future.
+ * If you wish to customise this module for your needs.
+ * Please contact us https://kiwicommerce.co.uk/contacts.
+ *
+ * @category   KiwiCommerce
+ * @package    KiwiCommerce_EnhancedSMTP
+ * @copyright  Copyright (C) 2018 Kiwi Commerce Ltd (https://kiwicommerce.co.uk/)
+ * @license    https://kiwicommerce.co.uk/magento2-extension-license/
+ */
+-->
+<table class="data-table admin__table-primary edit-order-table email-container">
+    <tr>
+        <td>
+            <b>Sender:</b> <%- sender %>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>Recipient:</b> <%- recipient %>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>Template:</b> <%- template %>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>Logged At:</b> <%- date %>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>Subject:</b> <%- subject %>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <b>Message:</b>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="effect2">
+            <div class="loader"></div>
+            <iframe onload="jQuery('div.loader').trigger('processStop');" id="email-body" src="<%- body_url %>" style="width: 100%;min-height: 400px;overflow: hidden;border: 0;"></iframe>
+        </td>
+    </tr>
+</table>

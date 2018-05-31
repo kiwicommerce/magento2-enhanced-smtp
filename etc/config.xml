@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+* KiwiCommerce
+*
+* Do not edit or add to this file if you wish to upgrade to newer versions in the future.
+* If you wish to customise this module for your needs.
+* Please contact us https://kiwicommerce.co.uk/contacts.
+*
+* @category   KiwiCommerce
+* @package    KiwiCommerce_EnhancedSMTP
+* @copyright  Copyright (C) 2018 Kiwi Commerce Ltd (https://kiwicommerce.co.uk/)
+* @license    https://kiwicommerce.co.uk/magento2-extension-license/
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <enhancedsmtp>
+            <general>
+                <enabled>1</enabled>
+                <log_clear>7</log_clear>
+                <warning_message>5</warning_message>
+            </general>
+            <allowedmodule>
+                <order>1</order>
+                <customer>1</customer>
+                <newsletter>1</newsletter>
+                <contactus>1</contactus>
+            </allowedmodule>
+            <advanced>
+                <test_email_from>general</test_email_from>
+                <log_email>1</log_email>
+                <developermode>0</developermode>
+            </advanced>
+        </enhancedsmtp>
+    </default>
+</config>

@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!--
+/**
+* KiwiCommerce
+*
+* Do not edit or add to this file if you wish to upgrade to newer versions in the future.
+* If you wish to customise this module for your needs.
+* Please contact us https://kiwicommerce.co.uk/contacts.
+*
+* @category   KiwiCommerce
+* @package    KiwiCommerce_EnhancedSMTP
+* @copyright  Copyright (C) 2018 Kiwi Commerce Ltd (https://kiwicommerce.co.uk/)
+* @license    https://kiwicommerce.co.uk/magento2-extension-license/
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="kiwicommerce" translate="label" sortOrder="9999">
+            <label>KiwiCommerce Extensions</label>
+        </tab>
+        <section id="enhancedsmtp" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Enhanced SMTP</label>
+            <tab>kiwicommerce</tab>
+            <resource>KiwiCommerce_EnhancedSMTP::enhancedsmtp_configuration</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <comment>Enable/Disabled Enhanced SMTP</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="log_clear" translate="label comment" type="text" sortOrder="20" showInDefault="1">
+                    <label>Clear Logs After X Days</label>
+                    <comment>Clear all email logs after these days</comment>
+                </field>
+                <field id="warning_message" translate="label comment" type="text" sortOrder="20" showInDefault="1">
+                    <label>Sending Failed Warning After X Times</label>
+                    <comment>Trigger notification of sending failed after these times</comment>
+                </field>
+            </group>
+            <group id="allowedmodule" translate="label" type="text" sortOrder="20" showInDefault="1">
+                <label>Enable Module</label>
+                <comment>This setting allow/disallow to record email history from below modules.</comment>
+                <field id="order" translate="label comment" type="select" sortOrder="10" showInDefault="1">
+                    <label>Order</label>
+                    <comment>Enable/Disabled to insert log for order related emails</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="customer" translate="label comment" type="select" sortOrder="20" showInDefault="1">
+                    <label>Customer</label>
+                    <comment>Enable/Disabled to insert log for customer related emails</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="newsletter" translate="label comment" type="select" sortOrder="30" showInDefault="1">
+                    <label>Newsletter</label>
+                    <comment>Enable/Disabled to insert log for newsletter related emails</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="contactus" translate="label comment" type="select" sortOrder="40" showInDefault="1">
+                    <label>Contact Us</label>
+                    <comment>Enable/Disabled to insert log for contact us related emails</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="smtpconfig" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>SMTP Configuration</label>
+                <field id="smtp_provider" translate="label comment button_label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMTP Provider</label>
+                    <frontend_model>KiwiCommerce\EnhancedSMTP\Block\Adminhtml\System\Config\SmtpProvider</frontend_model>
+                    <comment>Select from pre-defined SMTP servers.</comment>
+                </field>
+                <field id="hostname" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hostname</label>
+                    <comment>Support Hostname or IP Address</comment>
+                </field>
+                <field id="port" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Port</label>
+                    <comment>Default Ports: 25, 465, 587, Port 465 (SSL Required), Port 587 (TLS Required)</comment>
+                </field>
+                <field id="username" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Username</label>
+                </field>
+                <field id="password" translate="label" type="password" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Password</label>
+                </field>
+                <field id="protocol" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Protocol</label>
+                    <source_model>KiwiCommerce\EnhancedSMTP\Model\Config\Source\SMTP\Protocol</source_model>
+                    <comment>Secure Connection: SSL or TLS</comment>
+                </field>
+                <field id="auth" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Authentication</label>
+                    <source_model>KiwiCommerce\EnhancedSMTP\Model\Config\Source\SMTP\Authentication</source_model>
+                </field>
+            </group>
+            <group id="advanced" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Advanced Configuration</label>
+                <field id="test_email_from" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Test Email From</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+                <field id="test_email" translate="label comment button_label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Test Email To</label>
+                    <button_label>Send Email</button_label>
+                    <button_url>enhancedsmtp/emaillog/mail</button_url>
+                    <frontend_model>KiwiCommerce\EnhancedSMTP\Block\Adminhtml\System\Config\TestEmail</frontend_model>
+                    <comment>Send test email.</comment>
+                </field>
+                <field id="log_email" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Email Log</label>
+                    <comment>This setting allow/disallow to create Email log.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="developermode" translate="label comment" type="select" sortOrder="40" showInDefault="1">
+                    <label>Enable Developer Mode </label>
+                    <comment>This setting allow/disallow to send test Email(s).</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
