@@ -9,14 +9,14 @@
 
 ### **Installation**
  
- 1. Install using Composer
+ 1. Composer Installation
       - Navigate to your Magento root folder<br />
             `cd path_to_the_magento_root_directory`<br />
       - Then run the following command<br />
           `composer require kiwicommerce/module-enhanced-smtp`<br/>
       - Make sure that composer finished the installation without errors.
 
- 2. Install manually
+ 2. Command Line Installation
       - Backup your web directory and database.
       - Download Enhanced SMTP installation package from <a href="https://github.com/kiwicommerce/magento2-enhanced-smtp/releases/download/v1.0.0/kiwicommerce-enhanced-smtp-v100.zip">here</a>.
       - Upload contents of the Enhanced SMTP Log installation package to your Magento root directory.
@@ -32,7 +32,7 @@
           `php bin/magento setup:static-content:deploy`<br />
           `php bin/magento cache:flush`
           
-Find More details on <a href="https://kiwicommerce.co.uk/docs/enhanced_smtp/" target="_blank">Kiwi Commerce</a>
+Find More details on <a href="https://kiwicommerce.co.uk/extensions/magento2-enhanced-smtp/" target="_blank">Kiwi Commerce</a>
 
 ## Where will it appear in the Admin Panel
 
