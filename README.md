@@ -1,4 +1,4 @@
-## Magento 2 - Enhanced SMTP by Kiwi Commerce
+## Magento 2 - Enhanced SMTP by KiwiCommerce
 
 ### Overview
 - Delivering messages is an important and mandatory part of running an e-Commerce business. Magento sends hundreds and thousands of emails on daily basis. Reliability of the email sending process should be as stable as possible. All emails must be delivered to recipients without delays.
@@ -18,7 +18,7 @@
 
  2. Command Line Installation
       - Backup your web directory and database.
-      - Download Enhanced SMTP installation package from <a href="https://github.com/kiwicommerce/magento2-enhanced-smtp/releases/download/v1.0.0/kiwicommerce-enhanced-smtp-v100.zip">here</a>.
+      - Download Enhanced SMTP installation package from <a href="https://github.com/kiwicommerce/magento2-enhanced-smtp/releases/download/v1.0.1/kiwicommerce-enhanced-smtp-v101.zip">here</a>.
       - Upload contents of the Enhanced SMTP Log installation package to your Magento root directory.
       - Navigate to your Magento root folder<br />
           `cd path_to_the_magento_root_directory`<br />
@@ -32,7 +32,7 @@
           `php bin/magento setup:static-content:deploy`<br />
           `php bin/magento cache:flush`
           
-Find More details on <a href="https://kiwicommerce.co.uk/extensions/magento2-enhanced-smtp/" target="_blank">Kiwi Commerce</a>
+Find More details on <a href="https://kiwicommerce.co.uk/extensions/magento2-enhanced-smtp/" target="_blank">KiwiCommerce</a>
 
 ## Where will it appear in the Admin Panel
 
@@ -67,5 +67,6 @@ We love answering questions or doubts simply ask us in issue section. We're look
  
   - Follow us <a href="https://twitter.com/KiwiCommerce">@KiwiCommerce</a>
   - <a href="mailto:support@kiwicommerce.co.uk">Email Us</a>
-  - Have a look at our <a href="https://kiwicommerce.co.uk/docs/enhanced_smtp/">documentation</a> 
+  - Have a look at our <a href="https://kiwicommerce.co.uk/docs/enhanced-smtp/">documentation</a> 
+
 
