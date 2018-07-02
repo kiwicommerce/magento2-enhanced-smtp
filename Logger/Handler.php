@@ -13,8 +13,6 @@
  */
 namespace KiwiCommerce\EnhancedSMTP\Logger;
 
-use Monolog\Logger;
-
 /**
  * Class Handler
  * @package KiwiCommerce\EnhancedSMTP\Logger
@@ -25,7 +23,7 @@ class Handler extends \Magento\Framework\Logger\Handler\Base
      * Logging level
      * @var int
      */
-    protected $loggerType = Logger::INFO;
+    protected $loggerType = \KiwiCommerce\EnhancedSMTP\Logger\Logger::INFO;
 
     /**
      * File name
