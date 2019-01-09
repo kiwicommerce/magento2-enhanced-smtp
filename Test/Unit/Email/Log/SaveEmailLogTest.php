@@ -182,6 +182,11 @@ class SaveEmailLogTest extends \PHPUnit\Framework\TestCase
     public $logs;
 
     /**
+     * @var \KiwiCommerce\EnhancedSMTP\Helper\Benchmark
+     */
+    public $benchmark;
+
+    /**
      * @var SaveEmailLog
      */
     public $saveEmailLog;
@@ -238,6 +243,10 @@ class SaveEmailLogTest extends \PHPUnit\Framework\TestCase
             'save'
         ]);
 
+        $this->benchmark = $this->getMockBuilder(\KiwiCommerce\EnhancedSMTP\Helper\Benchmark::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->saveEmailLog = new SaveEmailLog(
             $this->templateFactory,
             $this->message,
@@ -249,7 +258,8 @@ class SaveEmailLogTest extends \PHPUnit\Framework\TestCase
             $this->requests,
             $this->config,
             $this->status,
-            $this->logger
+            $this->logger,
+            $this->benchmark
         );
     }
 
