@@ -55,6 +55,11 @@ class TransportTest extends \PHPUnit\Framework\TestCase
     public $status;
 
     /**
+     * @var \KiwiCommerce\EnhancedSMTP\Helper\Benchmark
+     */
+    public $benchmark;
+
+    /**
      * @var \Magento\Framework\Mail\TransportInterface
      */
     public $transportInterface;
@@ -88,13 +93,18 @@ class TransportTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->benchmark = $this->getMockBuilder(\KiwiCommerce\EnhancedSMTP\Helper\Benchmark::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->transportInterface = $this->createMock(\Magento\Framework\Mail\TransportInterface::class);
         $this->zendMailMock =  $this->createMock(\Zend_Mail::class);
 
         $this->transport = new Transport(
             $this->config,
             $this->logger,
-            $this->status
+            $this->status,
+            $this->benchmark
         );
     }
 
