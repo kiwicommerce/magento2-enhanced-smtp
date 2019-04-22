@@ -18,7 +18,8 @@ define([
 ], function (jQuery, alert, $t) {
     "use strict";
 
-    function main(config) {
+    function main(config)
+    {
 
         var ajaxUrl = config.ajaxUrl;
 

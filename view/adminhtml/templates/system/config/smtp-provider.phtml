@@ -13,10 +13,10 @@
  */
 ?>
 <div class="actions actions-provider">
-    <select id="<?php echo $block->getHtmlId() ?>">
+    <select id="<?= $block->getHtmlId() ?>">
         <?php foreach ($block->getSmtpProvider() as $value => $smtpProvider) : ?>
-            <option value="<?php echo $value; ?>">
-                <?php echo $smtpProvider['label'];?>
+            <option value="<?= /* @escapeNotVerified */ $value ?>">
+                <?= /* @escapeNotVerified */ $smtpProvider['label'] ?>
             </option>
         <?php endforeach; ?>
     </select>
@@ -25,8 +25,8 @@
     {
         "*": {
             "KiwiCommerce_EnhancedSMTP/js/smtp-provider": {
-                "jsonSmtpProviderInfo": <?php /* @escapeNotVerified */ echo $block->getSmtpDataInfo() ?>,
-                "selectId": "<?php /* @escapeNotVerified */ echo $block->getHtmlId() ?>"
+                "jsonSmtpProviderInfo": <?= /* @escapeNotVerified */ $block->getSmtpDataInfo() ?>,
+                "selectId": "<?= /* @escapeNotVerified */ $block->getHtmlId() ?>"
 
             }
         }

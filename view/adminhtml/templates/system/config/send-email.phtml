@@ -14,8 +14,8 @@
 ?>
 <div class="actions actions-provider">
     <input type="text" id="kiwicommerce_enhancedsmtp_test_email" />
-    <button class="actions-provider-button" type="button" id="<?php echo $block->getHtmlId() ?>">
-        <span><?php echo $block->escapeHtml($block->getButtonLabel()) ?></span>
+    <button class="actions-provider-button" type="button" id="<?= $block->getHtmlId() ?>">
+        <span><?= /* @escapeNotVerified */ $block->escapeHtml($block->getButtonLabel()) ?></span>
     </button>
 </div>
 
@@ -23,7 +23,7 @@
     {
         "#kiwicommerce_enhancedsmtp_test_email": {
             "KiwiCommerce_EnhancedSMTP/js/send-test-email": {
-                "ajaxUrl": "<?php /* @escapeNotVerified */ echo $block->getButtonUrl() ?>"
+                "ajaxUrl": "<?= /* @escapeNotVerified */ $block->getButtonUrl() ?>"
             }
         }
     }

@@ -13,12 +13,12 @@
  */
 ?>
 <script type="text/javascript">
-    window.viewselector = '.<?php echo \KiwiCommerce\EnhancedSMTP\Ui\Component\Grid\Column\LogAction::ELEMENT_SELECTOR; ?>';
+    window.viewselector = '.<?= \KiwiCommerce\EnhancedSMTP\Ui\Component\Grid\Column\LogAction::ELEMENT_SELECTOR; ?>';
 </script>
 <script type="text/x-magento-init">
     {
         "[data-role='spinner']": {
-            "KiwiCommerce_EnhancedSMTP/js/email": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+            "KiwiCommerce_EnhancedSMTP/js/email": <?= /* @escapeNotVerified */ $block->getJsLayout() ?>
         }
     }
 </script>

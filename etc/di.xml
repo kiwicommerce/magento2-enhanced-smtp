@@ -64,7 +64,6 @@
     </type>
     <!--Save Email log-->
     <preference for="Magento\Framework\Mail\Template\TransportBuilder" type="KiwiCommerce\EnhancedSMTP\Email\Log\SaveEmailLog" />
-    <!--Set SMTP Connection-->
     <type name="\Magento\Framework\Mail\TransportInterface">
         <plugin sortOrder="10" name="kiwicommerceSmtpMailTransport" type="KiwiCommerce\EnhancedSMTP\Email\Transport"/>
     </type>

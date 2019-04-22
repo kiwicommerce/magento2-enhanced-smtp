@@ -17,7 +17,7 @@
     <default>
         <enhancedsmtp>
             <general>
-                <enabled>1</enabled>
+                <enabled>0</enabled>
                 <log_clear>7</log_clear>
                 <warning_message>5</warning_message>
             </general>

@@ -75,7 +75,13 @@ class Transport extends \Zend_Mail_Transport_Smtp
         $this->benchmark->start(__METHOD__);
         $message = $this->getMessage($subject);
         if ($this->config->isEnable() && $message) {
-            $this->sendSmtpMessage($message);
+            if ($message instanceof \Zend_mail) {
+                $this->sendSmtpMessage($message);
+            } elseif ($message instanceof \Magento\Framework\Mail\Message) {
+                $this->sendSmtpMailMessage($message);
+            } else {
+                $proceed();
+            }
         } else {
             $proceed();
         }
@@ -107,11 +113,10 @@ class Transport extends \Zend_Mail_Transport_Smtp
     }
 
     /**
-     * Send a mail using this transport
+     * Send a mail using this transport for magento 2.1 or magento 2.2 version
      *
      * @param $message
-     * @throws \Exception
-     * @return null
+     * @throws \Magento\Framework\Exception\MailException
      */
     public function sendSmtpMessage($message)
     {
@@ -131,16 +136,78 @@ class Transport extends \Zend_Mail_Transport_Smtp
                 parent::send($message);
             }
 
-            //Set Staus Success
+            //Set Status Success
             $this->status->setStatusSuccess();
 
             //Reset Failed Count On Email Send Successfully
             $this->config->resetFailedCount();
 
             $this->logger->info("Email has been sent successfully.");
-
         } catch (\Exception $e) {
-            //Set Staus Failed
+            //Set Status Failed
+            $this->status->setStatusFailed($e->getMessage());
+
+            //Increment Failed Count Value On Email Sending Failed
+            $this->config->incrementFailedCount();
+
+            $this->logger->critical($e->getMessage());
+
+            throw new \Magento\Framework\Exception\MailException(new \Magento\Framework\Phrase($e->getMessage()), $e);
+        }
+    }
+
+    /**
+     * Send a mail using this transport for magento 2.3 or greater version
+     *
+     * @param \Magento\Framework\Mail\MessageInterface $message
+     * @throws \Magento\Framework\Exception\MailException
+     */
+    public function sendSmtpMailMessage(\Magento\Framework\Mail\MessageInterface $message)
+    {
+        $message = \Zend\Mail\Message::fromString($message->getRawMessage());
+
+        $options   = new \Zend\Mail\Transport\SmtpOptions([
+            'host' => $this->config->getConfig(Config::ENHANCED_SMTP_HOST_NAME),
+            'port' => $this->config->getConfig(Config::ENHANCED_SMTP_PORT)
+        ]);
+
+        $connectionConfig = [];
+
+        $auth = strtolower($this->config->getConfig(Config::ENHANCED_SMTP_AUTH));
+        if ($auth != 'none') {
+            $options->setConnectionClass($auth);
+
+            $connectionConfig = [
+                'username' => $this->config->getConfig(Config::ENHANCED_SMTP_USERNAME),
+                'password' => $this->config->getConfig(Config::ENHANCED_SMTP_PASSWORD)
+            ];
+        }
+
+        $ssl = $this->config->getConfig(Config::ENHANCED_SMTP_PROTOCOL);
+        if ($ssl != 'none') {
+            $connectionConfig['ssl'] = $ssl;
+        }
+
+        if (!empty($connectionConfig)) {
+            $options->setConnectionConfig($connectionConfig);
+        }
+
+        try {
+            if (!$this->config->getConfig(Config::ENHANCED_SMTP_DEVELOPER_MODE)) {
+                $transport = new \Zend\Mail\Transport\Smtp();
+                $transport->setOptions($options);
+                $transport->send($message);
+            }
+
+            //Set Status Success
+            $this->status->setStatusSuccess();
+
+            //Reset Failed Count On Email Send Successfully
+            $this->config->resetFailedCount();
+
+            $this->logger->info("Email has been sent successfully.");
+        } catch (\Exception $e) {
+            //Set Status Failed
             $this->status->setStatusFailed($e->getMessage());
 
             //Increment Failed Count Value On Email Sending Failed

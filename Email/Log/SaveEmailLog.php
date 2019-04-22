@@ -26,14 +26,6 @@ use KiwiCommerce\EnhancedSMTP\Model\SendEmail;
 class SaveEmailLog extends TransportBuilder
 {
     /**
-     * @var array
-     */
-    public $types = [
-        TemplateTypesInterface::TYPE_TEXT => MessageInterface::TYPE_TEXT,
-        TemplateTypesInterface::TYPE_HTML => MessageInterface::TYPE_HTML
-    ];
-
-    /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
     public $storeManager;
@@ -68,15 +60,25 @@ class SaveEmailLog extends TransportBuilder
      * @var \KiwiCommerce\EnhancedSMTP\Helper\Benchmark
      */
     public $benchmark;
-    
+
+    /**
+     * @var \Magento\Framework\Mail\MessageInterfaceFactory
+     */
+    protected $messageFactory;
+
+    /**
+     * @var $mailMessage
+     */
+    protected $mailMessage;
+
     /**
      * SaveEmailLog constructor.
-     *
      * @param \Magento\Framework\Mail\Template\FactoryInterface $templateFactory
      * @param MessageInterface $message
      * @param \Magento\Framework\Mail\Template\SenderResolverInterface $senderResolver
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      * @param \Magento\Framework\Mail\TransportInterfaceFactory $mailTransportFactory
+     * @param \Magento\Framework\Mail\MessageInterfaceFactory|null $messageFactory
      * @param \KiwiCommerce\EnhancedSMTP\Model\LogsFactory $logsFactory
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\App\Request\Http $request
@@ -91,6 +93,7 @@ class SaveEmailLog extends TransportBuilder
         \Magento\Framework\Mail\Template\SenderResolverInterface $senderResolver,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Framework\Mail\TransportInterfaceFactory $mailTransportFactory,
+        \Magento\Framework\Mail\MessageInterfaceFactory $messageFactory = null,
         \KiwiCommerce\EnhancedSMTP\Model\LogsFactory $logsFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\App\Request\Http $request,
@@ -108,31 +111,11 @@ class SaveEmailLog extends TransportBuilder
         $this->logger = $logger;
         $this->benchmark = $benchmark;
 
-        parent::__construct($templateFactory, $message, $senderResolver, $objectManager, $mailTransportFactory);
-    }
-
-    /**
-     * Initialize email message
-     *
-     * @return $this
-     * @throws \Zend_Mail_Exception
-     */
-    public function __initMessage()
-    {
-        $template = $this->getTemplate();
-        $body = $template->processTemplate();
-
-        $this->message
-            ->setMessageType(
-                $this->types[$template->getType()]
-            )
-            ->setBody($body)
-            ->setSubject(html_entity_decode(
-                $template->getSubject(),
-                ENT_QUOTES
-            ));
-
-        return $this;
+        if (!$config->versionCompare('2.3.0')) {
+            parent::__construct($templateFactory, $message, $senderResolver, $objectManager, $mailTransportFactory);
+        } else {
+            parent::__construct($templateFactory, $message, $senderResolver, $objectManager, $mailTransportFactory, $messageFactory);
+        }
     }
 
     /**
@@ -144,7 +127,9 @@ class SaveEmailLog extends TransportBuilder
     public function filterName($name)
     {
         return trim(strstr(
-            $name, "<", true
+            $name,
+            "<",
+            true
         ));
     }
 
@@ -165,24 +150,42 @@ class SaveEmailLog extends TransportBuilder
      */
     public function initEmailLog()
     {
-
-        $header = $this->message->getHeaders();
         $module = $this->requests->getModuleName();
         $emailLog = $this->logsFactory->create();
 
-        //Set sender details
-        $emailLog->setSenderEmail($this->message->getFrom());
+        if ($this->config->versionCompare('2.3.0')) {
 
-        $emailLog->setSenderName(
-            $this->filterName(
-                isset($header['From'])?current($header['From']):''
-            )
-        );
+            $from = $this->mailMessage->getFrom();
+
+            $senderEmail = '';
+            $senderName = '';
+            if (count($from)) {
+                $from->rewind();
+                $senderEmail = $from->current()->getEmail();
+                $senderName = $from->current()->getName();
+            }
+
+            //Set sender details
+            $emailLog->setSenderEmail($senderEmail);
+            $emailLog->setSenderName($senderName);
+            $emailLog->setEmailTemplate($this->mailMessage->getBodyText());
+
+        } else {
+            $header = $this->message->getHeaders();
+            //Set sender details
+            $emailLog->setSenderEmail($this->message->getFrom());
+
+            $emailLog->setSenderName(
+                $this->filterName(
+                    isset($header['From'])?current($header['From']):''
+                )
+            );
+            $emailLog->setEmailTemplate($this->message->getBody()->getRawContent());
+        }
 
         //Set template detail
         $emailLog->setTemplateId($this->templateIdentifier);
         $emailLog->setModuleName($module);
-        $emailLog->setEmailTemplate($this->message->getBody()->getRawContent());
         $emailLog->setEmailSubject($this->message->getSubject());
         $emailLog->setStoreId($this->getStoreId());
         $emailLog->setStatus(\KiwiCommerce\EnhancedSMTP\Model\Logs\Status::STATUS_PENDING);
@@ -258,6 +261,60 @@ class SaveEmailLog extends TransportBuilder
     }
 
     /**
+     *  Get recipients
+     *
+     * @return array
+     */
+    public function getRecipients()
+    {
+        $recipients = [];
+
+        foreach ($this->mailMessage->getTo() as $address) {
+            $recipients[] = $address->getEmail();
+        }
+
+        foreach ($this->mailMessage->getCc() as $address) {
+            $recipients[] = $address->getEmail();
+        }
+        foreach ($this->mailMessage->getBcc() as $address) {
+            $recipients[] = $address->getEmail();
+        }
+
+        $recipients = array_unique($recipients);
+        return $recipients;
+    }
+
+    /**
+     *  Get recipients name by email
+     *
+     * @param $email
+     * @return string
+     */
+    public function getRecipientsNameByEmail($email)
+    {
+        $recipients = [];
+
+        foreach ($this->mailMessage->getTo() as $address) {
+            $recipients[$address->getEmail()] = $address->getName();
+        }
+
+        foreach ($this->mailMessage->getCc() as $address) {
+            $recipients[$address->getEmail()] = $address->getName();
+        }
+        foreach ($this->mailMessage->getBcc() as $address) {
+            $recipients[$address->getEmail()] = $address->getName();
+        }
+
+        $recipientName = '';
+
+        if (!empty($recipients[$email])) {
+            $recipientName = $recipients[$email];
+        }
+
+        return $recipientName;
+    }
+
+    /**
      * Log emails
      *
      * @return $this|bool
@@ -266,24 +323,41 @@ class SaveEmailLog extends TransportBuilder
     {
         $this->benchmark->start(__METHOD__);
 
-        if (!$this->config->isEnable() || $this->templateIdentifier == SendEmail::TEST_EMAIL_TEMPLATE || !$this->config->getConfig(Config::ENHANCED_SMTP_LOG_EMAIL)) {
+        if (!$this->config->isEnable()
+            || $this->templateIdentifier == SendEmail::TEST_EMAIL_TEMPLATE
+            || !$this->config->getConfig(Config::ENHANCED_SMTP_LOG_EMAIL)
+        ) {
             return parent::prepareMessage();
         }
 
         try {
-            $this->__initMessage();
 
             if (!$this->isAllowed()) {
                 return parent::prepareMessage();
             }
 
-            $recipients = $this->message->getRecipients();
+            parent::prepareMessage();
+
+            if ($this->config->versionCompare('2.3.0')) {
+                $this->mailMessage = \Zend\Mail\Message::fromString($this->message->getRawMessage());
+
+                $recipients = $this->getRecipients();
+
+            } else {
+                $recipients = $this->message->getRecipients();
+            }
 
             $logIdArray = [];
 
             foreach ($recipients as $key => $recipient) {
                 $emailLog = $this->initEmailLog();
-                $name = $this->getRecipientName($key);
+
+                if ($this->config->versionCompare('2.3.0')) {
+                    $name = $this->getRecipientsNameByEmail($recipient);
+                } else {
+                    $name = $this->getRecipientName($key);
+                }
+
                 $logId = $this->sendLog($emailLog, $recipient, $name);
                 $logIdArray[] = $logId;
             }

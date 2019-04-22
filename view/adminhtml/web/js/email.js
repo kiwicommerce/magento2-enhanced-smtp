@@ -46,7 +46,8 @@ require([
                     }
 
                     var modalHtml = mageTemplate(
-                        emailPreviewTemplate, {
+                        emailPreviewTemplate,
+                        {
                             sender: sender,
                             recipient: recipient,
                             template: row.template_id,

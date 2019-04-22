@@ -15,6 +15,10 @@ namespace KiwiCommerce\EnhancedSMTP\Test\Unit\Model;
 
 use KiwiCommerce\EnhancedSMTP\Model\SendEmail;
 
+/**
+ * Class SendEmailTest
+ * @package KiwiCommerce\EnhancedSMTP\Test\Unit\Model
+ */
 class SendEmailTest extends \PHPUnit\Framework\TestCase
 {
     /**

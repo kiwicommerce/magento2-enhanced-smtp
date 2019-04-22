@@ -16,6 +16,10 @@ namespace KiwiCommerce\EnhancedSMTP\Test\Unit\Email;
 use KiwiCommerce\EnhancedSMTP\Email\Transport;
 use KiwiCommerce\EnhancedSMTP\Helper\Config;
 
+/**
+ * Class TransportTest
+ * @package KiwiCommerce\EnhancedSMTP\Test\Unit\Email
+ */
 class TransportTest extends \PHPUnit\Framework\TestCase
 {
     /**

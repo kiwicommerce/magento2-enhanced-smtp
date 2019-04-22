@@ -25,32 +25,6 @@ use Magento\Ui\Component\Listing\Columns\Column;
 class Sender extends Column
 {
     /**
-     * @var UrlInterface
-     */
-    protected $urlBuilder;
-
-    /**
-     * Sender constructor.
-     *
-     * @param ContextInterface $context
-     * @param UiComponentFactory $uiComponentFactory
-     * @param UrlInterface $urlBuilder
-     * @param array $components
-     * @param array $data
-     */
-    public function __construct(
-        ContextInterface $context,
-        UiComponentFactory $uiComponentFactory,
-        UrlInterface $urlBuilder,
-        array $components = [],
-        array $data = []
-    ) {
-    
-        $this->urlBuilder = $urlBuilder;
-        parent::__construct($context, $uiComponentFactory, $components, $data);
-    }
-
-    /**
      * Prepare Data Source
      *
      * @param array $dataSource

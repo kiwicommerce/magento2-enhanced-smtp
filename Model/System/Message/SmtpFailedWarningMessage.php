@@ -70,6 +70,9 @@ class SmtpFailedWarningMessage implements MessageInterface
     public function isDisplayed()
     {
         $warningMessageCount = $this->config->getConfig(Config::WARNING_MESSAGE_COUNT);
+        if (empty($warningMessageCount)) {
+            $warningMessageCount = 5;
+        }
         $failedCount = $this->config->getCustomFailedCount();
 
         return ($failedCount >= $warningMessageCount)? true : false;

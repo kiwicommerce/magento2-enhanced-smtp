@@ -35,10 +35,12 @@
                 <field id="log_clear" translate="label comment" type="text" sortOrder="20" showInDefault="1">
                     <label>Clear Logs After X Days</label>
                     <comment>Clear all email logs after these days</comment>
+                    <validate>validate-number validate-zero-or-greater</validate>
                 </field>
                 <field id="warning_message" translate="label comment" type="text" sortOrder="20" showInDefault="1">
                     <label>Sending Failed Warning After X Times</label>
                     <comment>Trigger notification of sending failed after these times</comment>
+                    <validate>required-entry validate-number validate-zero-or-greater</validate>
                 </field>
             </group>
             <group id="allowedmodule" translate="label" type="text" sortOrder="20" showInDefault="1">

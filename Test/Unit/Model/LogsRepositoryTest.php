@@ -16,6 +16,10 @@ namespace KiwiCommerce\EnhancedSMTP\Test\Unit\Model;
 use KiwiCommerce\EnhancedSMTP\Model\LogsRepository;
 use Magento\Framework\Api\SortOrder;
 
+/**
+ * Class LogsRepositoryTest
+ * @package KiwiCommerce\EnhancedSMTP\Test\Unit\Model
+ */
 class LogsRepositoryTest extends \PHPUnit\Framework\TestCase
 {
     /**

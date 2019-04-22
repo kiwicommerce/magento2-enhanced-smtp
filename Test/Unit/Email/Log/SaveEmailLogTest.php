@@ -17,6 +17,10 @@ use KiwiCommerce\EnhancedSMTP\Email\Log\SaveEmailLog;
 use Magento\Framework\App\TemplateTypesInterface;
 use Magento\Framework\Mail\MessageInterface;
 
+/**
+ * Class SaveEmailLogTest
+ * @package KiwiCommerce\EnhancedSMTP\Test\Unit\Email\Log
+ */
 class SaveEmailLogTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -143,7 +147,6 @@ class SaveEmailLogTest extends \PHPUnit\Framework\TestCase
      * @var \Magento\Framework\Mail\TransportInterfaceFactory
      */
     protected $mailTransportFactory;
-
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface

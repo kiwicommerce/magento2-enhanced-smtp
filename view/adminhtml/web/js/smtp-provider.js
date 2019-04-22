@@ -17,7 +17,8 @@ define([
 ], function (jQuery, $t) {
     "use strict";
 
-    function main(config) {
+    function main(config)
+    {
 
         var jsonSmtpProviderInfo = config.jsonSmtpProviderInfo,
             selectId = "#"+config.selectId;

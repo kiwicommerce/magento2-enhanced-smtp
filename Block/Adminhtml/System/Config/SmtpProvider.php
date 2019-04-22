@@ -52,7 +52,6 @@ class SmtpProvider extends Field
             'smtp_data_info' => json_encode($this->getListOfSmtpProvider())
         ]);
 
-
         return $this->_toHtml();
     }
 

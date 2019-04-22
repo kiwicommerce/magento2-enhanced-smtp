@@ -25,24 +25,6 @@ use KiwiCommerce\EnhancedSMTP\Model\Logs\Status as EmailStatus;
 class Status extends Column
 {
     /**
-     * Status constructor.
-     *
-     * @param ContextInterface $context
-     * @param UiComponentFactory $uiComponentFactory
-     * @param array $components
-     * @param array $data
-     */
-    public function __construct(
-        ContextInterface $context,
-        UiComponentFactory $uiComponentFactory,
-        array $components = [],
-        array $data = []
-    ) {
-    
-        parent::__construct($context, $uiComponentFactory, $components, $data);
-    }
-
-    /**
      * Prepare Data Source
      *
      * @param array $dataSource
