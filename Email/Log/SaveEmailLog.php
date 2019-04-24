@@ -111,7 +111,7 @@ class SaveEmailLog extends TransportBuilder
         $this->logger = $logger;
         $this->benchmark = $benchmark;
 
-        if (!$config->versionCompare('2.3.0')) {
+        if (!$config->versionCompare('2.2.8')) {
             parent::__construct($templateFactory, $message, $senderResolver, $objectManager, $mailTransportFactory);
         } else {
             parent::__construct($templateFactory, $message, $senderResolver, $objectManager, $mailTransportFactory, $messageFactory);
@@ -153,7 +153,7 @@ class SaveEmailLog extends TransportBuilder
         $module = $this->requests->getModuleName();
         $emailLog = $this->logsFactory->create();
 
-        if ($this->config->versionCompare('2.3.0')) {
+        if ($this->config->versionCompare('2.2.8')) {
 
             $from = $this->mailMessage->getFrom();
 
@@ -338,7 +338,7 @@ class SaveEmailLog extends TransportBuilder
 
             parent::prepareMessage();
 
-            if ($this->config->versionCompare('2.3.0')) {
+            if ($this->config->versionCompare('2.2.8')) {
                 $this->mailMessage = \Zend\Mail\Message::fromString($this->message->getRawMessage());
 
                 $recipients = $this->getRecipients();
@@ -352,7 +352,7 @@ class SaveEmailLog extends TransportBuilder
             foreach ($recipients as $key => $recipient) {
                 $emailLog = $this->initEmailLog();
 
-                if ($this->config->versionCompare('2.3.0')) {
+                if ($this->config->versionCompare('2.2.8')) {
                     $name = $this->getRecipientsNameByEmail($recipient);
                 } else {
                     $name = $this->getRecipientName($key);
