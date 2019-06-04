@@ -30,7 +30,7 @@ class Protocol implements ArrayInterface
     {
         $options = [
             [
-                'value' => '',
+                'value' => 'none',
                 'label' => __('None')
             ],
             [
