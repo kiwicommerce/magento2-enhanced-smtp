@@ -174,7 +174,7 @@ class Transport extends \Zend_Mail_Transport_Smtp
         $connectionConfig = [];
 
         $auth = strtolower($this->config->getConfig(Config::ENHANCED_SMTP_AUTH));
-        if ($auth != 'none') {
+        if (isset($auth) && $auth !== "") {
             $options->setConnectionClass($auth);
 
             $connectionConfig = [
@@ -184,7 +184,7 @@ class Transport extends \Zend_Mail_Transport_Smtp
         }
 
         $ssl = $this->config->getConfig(Config::ENHANCED_SMTP_PROTOCOL);
-        if ($ssl != 'none') {
+        if (isset($ssl) && $ssl !== "") {
             $connectionConfig['ssl'] = $ssl;
         }
 
