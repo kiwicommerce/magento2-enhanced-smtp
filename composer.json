@@ -2,7 +2,7 @@
     "name": "kiwicommerce/module-enhanced-smtp",
     "description": "Magento 2 - Enhanced SMTP",
     "type": "magento2-module",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "license": [
         "OSL-3.0"
     ],
