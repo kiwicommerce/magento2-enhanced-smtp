@@ -344,7 +344,7 @@ class SaveEmailLog extends TransportBuilder
                 return parent::prepareMessage();
             }
 
-            parent::prepareMessage();
+            $result = parent::prepareMessage();
 
             if ($this->config->versionCompare('2.2.8')) {
                 $this->mailMessage = \Zend\Mail\Message::fromString($this->message->getRawMessage());
@@ -378,6 +378,6 @@ class SaveEmailLog extends TransportBuilder
 
         $this->benchmark->end(__METHOD__);
 
-        return $this;
+        return isset($result) ? $result : parent::prepareMessage();
     }
 }
