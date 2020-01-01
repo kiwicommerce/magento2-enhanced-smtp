@@ -168,7 +168,15 @@ class SaveEmailLog extends TransportBuilder
             //Set sender details
             $emailLog->setSenderEmail($senderEmail);
             $emailLog->setSenderName($senderName);
-            $emailLog->setEmailTemplate($this->mailMessage->getBodyText());
+
+            //Decode Email message for Magento 2.3.3 and higher version
+            if ($this->config->versionCompare('2.3.3')) {
+                $content = quoted_printable_decode($this->mailMessage->getBodyText());
+            } else {
+                $content = $this->mailMessage->getBodyText();
+            }
+
+            $emailLog->setEmailTemplate($content);
 
         } else {
             $header = $this->message->getHeaders();

@@ -71,15 +71,16 @@ class SendEmail
     {
         $this->inlineTranslation->suspend();
 
-        $transport = $this->transportBuilder->setTemplateIdentifier(self::TEST_EMAIL_TEMPLATE)
+        $this->transportBuilder->setTemplateIdentifier(self::TEST_EMAIL_TEMPLATE)
             ->setTemplateOptions([
                 'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
                 'store' => $this->storeManager->getStore()->getId()
             ])
             ->setTemplateVars(['store' => $this->storeManager->getStore()])
             ->setFrom($from)
-            ->addTo([$toEmail])
-            ->getTransport();
+            ->addTo($toEmail);
+
+        $transport = $this->transportBuilder->getTransport();
         $transport->sendMessage();
 
         $this->inlineTranslation->resume();

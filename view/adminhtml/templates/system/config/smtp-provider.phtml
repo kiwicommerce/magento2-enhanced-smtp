@@ -14,7 +14,7 @@
 ?>
 <div class="actions actions-provider">
     <select id="<?= $block->getHtmlId() ?>">
-        <?php foreach ($block->getSmtpProvider() as $value => $smtpProvider) : ?>
+        <?php foreach ($block->getSmtpProvider() as $value => $smtpProvider): ?>
             <option value="<?= /* @escapeNotVerified */ $value ?>">
                 <?= /* @escapeNotVerified */ $smtpProvider['label'] ?>
             </option>

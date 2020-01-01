@@ -74,10 +74,13 @@ class Transport extends \Zend_Mail_Transport_Smtp
     {
         $this->benchmark->start(__METHOD__);
         $message = $this->getMessage($subject);
+
         if ($this->config->isEnable() && $message) {
             if ($message instanceof \Zend_mail) {
                 $this->sendSmtpMessage($message);
             } elseif ($message instanceof \Magento\Framework\Mail\Message) {
+                $this->sendSmtpMailMessage($message);
+            } elseif ($message instanceof \Magento\Framework\Mail\EmailMessage) {
                 $this->sendSmtpMailMessage($message);
             } else {
                 $proceed();
@@ -157,13 +160,14 @@ class Transport extends \Zend_Mail_Transport_Smtp
     }
 
     /**
-     * Send a mail using this transport for magento 2.3 or greater version
+     * Send a mail using this transport for magento 2.2.8 or greater version
      *
-     * @param \Magento\Framework\Mail\MessageInterface $message
+     * @param $message
      * @throws \Magento\Framework\Exception\MailException
      */
-    public function sendSmtpMailMessage(\Magento\Framework\Mail\MessageInterface $message)
+    public function sendSmtpMailMessage($message)
     {
+
         $message = \Zend\Mail\Message::fromString($message->getRawMessage());
 
         $options   = new \Zend\Mail\Transport\SmtpOptions([
