@@ -168,7 +168,9 @@ class Transport extends \Zend_Mail_Transport_Smtp
     public function sendSmtpMailMessage($message)
     {
 
+        $encoding = $message->getEncoding();
         $message = \Zend\Mail\Message::fromString($message->getRawMessage());
+        $message->setEncoding($encoding);
 
         $options   = new \Zend\Mail\Transport\SmtpOptions([
             'host' => $this->config->getConfig(Config::ENHANCED_SMTP_HOST_NAME),
