@@ -1,3 +1,5 @@
+# We're not maintaining this extension, if you need any support please contact us at hello@kiwicommerce.co.uk
+
 # Magento 2 - Enhanced SMTP by [KiwiCommerce](https://kiwicommerce.co.uk/)
 - Delivering messages is an essential and mandatory part of running an e-Commerce business. Magento sends hundreds and thousands of emails on a daily basis. Reliability of the email sending process should be as stable as possible. All emails must be delivered to recipients without delays.
 - Magento-based store owners often struggle when it comes to sending transactional emails. The default email server of inherent hosting will be used to send unregistered emails from unauthorized senders. These emails that are sent by default Magento 2, will probably end up in the Spam box. As a result, these emails cannot approach your customers.
