@@ -332,7 +332,6 @@ class SaveEmailLog extends TransportBuilder
         $this->benchmark->start(__METHOD__);
 
         if (!$this->config->isEnable()
-            || $this->templateIdentifier == SendEmail::TEST_EMAIL_TEMPLATE
             || !$this->config->getConfig(Config::ENHANCED_SMTP_LOG_EMAIL)
         ) {
             return parent::prepareMessage();
