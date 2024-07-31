@@ -347,7 +347,7 @@ class SaveEmailLog extends TransportBuilder
             $result = parent::prepareMessage();
 
             if ($this->config->versionCompare('2.2.8')) {
-                $this->mailMessage = \Zend\Mail\Message::fromString($this->message->getRawMessage());
+                $this->mailMessage = \Laminas\Mail\Message::fromString($this->message->getRawMessage());
 
                 $recipients = $this->getRecipients();
 

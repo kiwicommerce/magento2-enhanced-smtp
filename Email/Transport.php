@@ -22,7 +22,7 @@ use KiwiCommerce\EnhancedSMTP\Model\Logs\Status;
  * Class Transport
  * @package  KiwiCommerce\EnhancedSMTP\Email
  */
-class Transport extends \Zend_Mail_Transport_Smtp
+class Transport extends \Laminas\Mail\Transport\Sendmail
 {
     /**
      * @var Config
@@ -76,7 +76,7 @@ class Transport extends \Zend_Mail_Transport_Smtp
         $message = $this->getMessage($subject);
 
         if ($this->config->isEnable() && $message) {
-            if ($message instanceof \Zend_mail) {
+            if ($message instanceof \Laminas\Mail) {
                 $this->sendSmtpMessage($message);
             } elseif ($message instanceof \Magento\Framework\Mail\Message) {
                 $this->sendSmtpMailMessage($message);
@@ -168,14 +168,9 @@ class Transport extends \Zend_Mail_Transport_Smtp
     public function sendSmtpMailMessage($message)
     {
 
-        $message = \Zend\Mail\Message::fromString($message->getRawMessage());
-        
-        array_map(function ($headerName) use ($message) {
-            $header = $message->getHeaders()->get($headerName);
-            if ($header) $message->getHeaders()->get($headerName)->setEncoding('utf-8');
-        }, ['to', 'reply-to', 'from']);
+        $message = \Laminas\Mail\Message::fromString($message->getRawMessage());
 
-        $options   = new \Zend\Mail\Transport\SmtpOptions([
+        $options   = new \Laminas\Mail\Transport\SmtpOptions([
             'host' => $this->config->getConfig(Config::ENHANCED_SMTP_HOST_NAME),
             'port' => $this->config->getConfig(Config::ENHANCED_SMTP_PORT)
         ]);
@@ -203,7 +198,7 @@ class Transport extends \Zend_Mail_Transport_Smtp
 
         try {
             if (!$this->config->getConfig(Config::ENHANCED_SMTP_DEVELOPER_MODE)) {
-                $transport = new \Zend\Mail\Transport\Smtp();
+                $transport = new  \Laminas\Mail\Transport\Smtp();
                 $transport->setOptions($options);
                 $transport->send($message);
             }
