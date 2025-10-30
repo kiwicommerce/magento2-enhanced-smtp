@@ -71,5 +71,3 @@ We love answering questions or doubts simply ask us in issue section. We're look
   - Follow us [@KiwiCommerce](https://twitter.com/KiwiCommerce)
   - <a href="mailto:support@kiwicommerce.co.uk">Email Us</a>
   - Have a look at our [documentation](https://kiwicommerce.co.uk/docs/enhanced-smtp/)
-
-
