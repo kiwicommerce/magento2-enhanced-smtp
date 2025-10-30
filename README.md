@@ -6,17 +6,9 @@
 - This extension provides you with a feature to track all sent emails by inserting email log.
 
 ## Installation
- 1. Composer Installation
-      - Navigate to your Magento root folder<br />
-            `cd path_to_the_magento_root_directory`
-      - Then run the following command<br />
-          `composer require kiwicommerce/module-enhanced-smtp`
-      - Make sure that composer finished the installation without errors
-
- 2. Command Line Installation
       - Backup your web directory and database
-      - Download Enhanced SMTP installation package from <a href="https://github.com/kiwicommerce/magento2-enhanced-smtp/releases/download/v1.0.2/kiwicommerce-enhanced-smtp-v102.zip">here</a>
-      - Upload contents of the Enhanced SMTP Log installation package to your Magento root directory
+      - Download Enhanced SMTP installation package from <a href="https://kiwicommerce.co.uk/product/enhanced-smtp/">here</a>
+      - Upload contents of the Enhanced SMTP Log installation package to your Magento app/code directory
       - Navigate to your Magento root folder<br />
           `cd path_to_the_magento_root_directory`<br />
       - Then run the following command<br />
@@ -31,7 +23,7 @@ php bin/magento cache:flush
 ```
 - Log out from the backend and log in again.
           
-Find More details on [KiwiCommerce](https://kiwicommerce.co.uk/extensions/magento2-enhanced-smtp/)
+Find More details on [KiwiCommerce](https://kiwicommerce.co.uk/product/enhanced-smtp/)
 
 ## Where will it appear in the Admin Panel
 - Go to **System > Enhanced SMTP by KiwiCommerce > Email Logs**. Here you can See the list of sent mail logs.
